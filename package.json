@@ -1,0 +1,20 @@
+{
+  "name": "servidor",
+  "version": "1.0.0",
+  "description": "servidor para obtener token",
+  "main": "server.mjs",
+  "scripts": {
+    "start": "node --experimental-modules server.mjs",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon --experimental-modules server.mjs"  
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "node-fetch": "^2.6.1",
+    "cors": "^2.8.5",
+    "dotenv": "^10.0.0"
+  },
+  "keywords": [],
+  "author": "edison.cuichan@outlook.com",
+  "license": "ISC"
+}
