@@ -1,6 +1,4 @@
 import express from 'express';
-import https from 'https';
-import fs from 'fs';
 import fetch from 'node-fetch';
 import cors from 'cors';
 import dotenv from 'dotenv';
@@ -59,19 +57,7 @@ app.post('/get-token', async (req, res) => {
   }
 });
 
-// Configuración de opciones HTTPS
-const options = {
-  key: fs.readFileSync('server.key'),  // Reemplaza con la ruta completa si es necesario
-  cert: fs.readFileSync('server.cert'), // Reemplaza con la ruta completa si es necesario
-};
-
-// Crear servidor HTTPS
-const server = https.createServer(options, app);
-
-server.on('error', (error) => {
-  console.error('Error en el servidor HTTPS:', error);
-});
-
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Servidor escuchando en el puerto ${PORT} con HTTPS`);
+// Crear servidor HTTP
+app.listen(PORT, '0.0.0.0', () => {
+  console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
