@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 dotenv.config({ path: 'config.env' });
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 443;
 
 // Middleware para configurar CORS
 app.use(cors({
@@ -57,7 +57,6 @@ app.post('/get-token', async (req, res) => {
   }
 });
 
-// Crear servidor HTTP
 app.listen(PORT, '0.0.0.0', () => {
   console.log(`Servidor escuchando en el puerto ${PORT}`);
 });
