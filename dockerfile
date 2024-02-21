@@ -13,11 +13,8 @@ RUN npm install
 # Copia los archivos de la aplicación al directorio de trabajo
 COPY . .
 
-# Copia los certificados SSL al contenedor
-COPY server.key server.cer
-
 # Expone el puerto en el que la aplicación se ejecutará
-EXPOSE 3000
+EXPOSE 443
 
 # Comando para ejecutar la aplicación
 CMD [ "node", "--experimental-modules", "server.mjs" ]
