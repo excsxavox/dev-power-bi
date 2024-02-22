@@ -1,11 +1,13 @@
 import express from 'express';
+import https from 'https';
+import fs from 'fs';
 import fetch from 'node-fetch';
 import cors from 'cors';
 import dotenv from 'dotenv';
 dotenv.config({ path: 'config.env' });
 
 const app = express();
-const PORT = process.env.PORT || 443;
+const PORT = process.env.PORT || 3000;
 
 // Middleware para configurar CORS
 app.use(cors({
@@ -17,8 +19,7 @@ app.use(cors({
 // Ruta para obtener el token
 app.post('/get-token', async (req, res) => {
   try {
-    // Datos para la solicitud del token
-    const tokenData = new URLSearchParams({
+   const tokenData = new URLSearchParams({
       'grant_type': 'password',
       'resource': 'https://analysis.windows.net/powerbi/api',
       'username': process.env.PBI_USERNAME,
@@ -57,6 +58,19 @@ app.post('/get-token', async (req, res) => {
   }
 });
 
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`Servidor escuchando en el puerto ${PORT}`);
+// Configuración de opciones HTTPS con archivos ".pem"
+const options = {
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.crt'),
+};
+
+// Crear servidor HTTPS
+const server = https.createServer(options, app);
+
+server.on('error', (error) => {
+  console.error('Error en el servidor HTTPS:', error);
+});
+
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Servidor escuchando en el puerto ${PORT} con HTTPS`);
 });
