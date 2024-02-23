@@ -60,7 +60,7 @@ app.post('/get-token', async (req, res) => {
 
 // Configuración de opciones HTTPS con archivos ".pem"
 const options = {
-  key: fs.readFileSync('server.key'),
+  key: fs.readFileSync('serverBCE.key'),
   cert: fs.readFileSync('ServerCertificate.crt'),
 };
 
