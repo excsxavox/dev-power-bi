@@ -10,6 +10,14 @@ COPY package*.json ./
 # Instala las dependencias de la aplicación
 RUN npm install
 
+# Copiar archivos al contenedor
+COPY tu_certificado.crt /app/ServerCertificate.crt
+COPY tu_clave_privada.key /app/serverBCE.key
+COPY app.js /app/app.js
+
+# Establecer variable de entorno para la contraseña
+ENV KEY_PASSWORD=Cert*bce01
+
 # Copia los archivos de la aplicación al directorio de trabajo
 COPY . .
 
