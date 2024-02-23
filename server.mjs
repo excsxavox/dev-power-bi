@@ -12,11 +12,10 @@ const PORT = process.env.PORT || 443;
 
 // Middleware para configurar CORS
 app.use(cors({
-  origin: 'http//127.0.0.1:5500',
+  origin: '*',
   exposedHeaders: ['Content-Type', 'Authorization'],
   credentials: true,
 }));
-app.options('/get-token', cors());
 // Ruta para obtener el token
 app.post('/get-token', async (req, res) => {
   try {
