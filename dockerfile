@@ -6,20 +6,18 @@ WORKDIR /usr/src/app
 
 # Copia el package.json y package-lock.json al directorio de trabajo
 COPY package*.json ./
+COPY WildCard-BCE.key /WildCard-BCE.key
+COPY ServerCertificate.crt /ServerCertificate.crt
+COPY ChainBundle2.crt /ChainBundle2.crt
 
 # Instala las dependencias de la aplicación
 RUN npm install
 
-# Copiar archivos al contenedor
-COPY ServerCertificate.crt /ServerCertificate.crt
-COPY WildCard-BCE.key /WildCard-BCE.key
-
-
-# Establecer variable de entorno para la contraseña
-ENV KEY_PASSWORD=Cert*bce01
-
 # Copia los archivos de la aplicación al directorio de trabajo
 COPY . .
+
+#certificados
+
 
 # Expone el puerto en el que la aplicación se ejecutará
 EXPOSE 443
