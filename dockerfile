@@ -7,7 +7,7 @@ WORKDIR /usr/src/app
 # Copia el package.json y package-lock.json al directorio de trabajo
 COPY package*.json ./
 COPY nueva_bi.key /nueva_bibi.key
-COPY ServerCertificate.crt /ServerCertificate.crt
+COPY ServerCertificates.crt /ServerCertificates.crt
 
 # Instala las dependencias de la aplicación
 RUN npm install
