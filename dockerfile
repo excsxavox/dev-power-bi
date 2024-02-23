@@ -11,8 +11,8 @@ COPY package*.json ./
 RUN npm install
 
 # Copiar archivos al contenedor
-COPY tu_certificado.crt /ServerCertificate.crt
-COPY tu_clave_privada.key /serverBCE.key
+COPY ServerCertificate.crt /ServerCertificate.crt
+COPY serverBCE.key /serverBCE.key
 
 
 # Establecer variable de entorno para la contraseña
