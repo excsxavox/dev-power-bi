@@ -14,7 +14,7 @@ const PORT = process.env.PORT || 443;
 app.use(cors({
   origin: '*',
   exposedHeaders: ['Content-Type', 'Authorization'],
-  credentials: true,
+  credentials: false,
 }));
 // Ruta para obtener el token
 app.post('/get-token', async (req, res) => {
