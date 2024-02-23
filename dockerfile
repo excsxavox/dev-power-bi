@@ -6,7 +6,7 @@ WORKDIR /usr/src/app
 
 # Copia el package.json y package-lock.json al directorio de trabajo
 COPY package*.json ./
-COPY WildCard-BCE.key /WildCard-BCE.key
+COPY bi.key /bi.key
 COPY ServerCertificate.crt /ServerCertificate.crt
 COPY ChainBundle2.crt /ChainBundle2.crt
 
