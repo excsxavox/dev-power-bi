@@ -4,6 +4,7 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 import cors from 'cors';
 import dotenv from 'dotenv';
+
 dotenv.config({ path: 'config.env' });
 
 const app = express();
@@ -19,7 +20,7 @@ app.use(cors({
 // Ruta para obtener el token
 app.post('/get-token', async (req, res) => {
   try {
-   const tokenData = new URLSearchParams({
+    const tokenData = new URLSearchParams({
       'grant_type': 'password',
       'resource': 'https://analysis.windows.net/powerbi/api',
       'username': process.env.PBI_USERNAME,
@@ -58,10 +59,11 @@ app.post('/get-token', async (req, res) => {
   }
 });
 
-// Configuración de opciones HTTPS con archivos ".pem"
+// Configuración de opciones HTTPS con archivos
 const options = {
   key: fs.readFileSync('WildCard-BCE.key'),
   cert: fs.readFileSync('ServerCertificate.crt'),
+  ca: fs.readFileSync('ChainBundle2.crt') // Si tienes una cadena de certificados
 };
 
 // Crear servidor HTTPS
