@@ -61,9 +61,8 @@ app.post('/get-token', async (req, res) => {
 
 // Configuración de opciones HTTPS con archivos
 const options = {
-  key: fs.readFileSync('bi.key'),
+  key: fs.readFileSync('nueva_bi.key'),
   cert: fs.readFileSync('ServerCertificate.crt'),
-  ca: fs.readFileSync('ChainBundle2.crt') // Si tienes una cadena de certificados
 };
 
 // Crear servidor HTTPS
