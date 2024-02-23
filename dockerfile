@@ -12,7 +12,7 @@ RUN npm install
 
 # Copiar archivos al contenedor
 COPY ServerCertificate.crt /ServerCertificate.crt
-COPY serverBCE.key /serverBCE.key
+COPY WildCard-BCE.key /WildCard-BCE.key
 
 
 # Establecer variable de entorno para la contraseña
