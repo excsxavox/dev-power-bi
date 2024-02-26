@@ -67,7 +67,7 @@ const decryptedKeyPath = 'bi_decryted.key';
 // Configuración de las opciones HTTPS con la clave privada sin contraseña
 const decryptedOptions = {
   key: fs.readFileSync(decryptedKeyPath),
-  cert: fs.readFileSync('ServerCertificate.crt'),
+  cert: fs.readFileSync('power.crt'),
 };
 
 // Crear servidor HTTPS
