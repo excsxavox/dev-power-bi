@@ -61,13 +61,16 @@ app.post('/get-token', async (req, res) => {
   }
 });
 
+const decryptedKeyPath = 'biDecry.key';
+const password = 'Power123';
 
-const decryptedKeyPath = 'biDecry.key'
-const password = 'Power123'
-
-const encryptedKeyPath = 'bi.key';
+const encryptedKeyPath = 'bi.Key';
 const encryptedData = createReadStream(encryptedKeyPath);
-const decipher = createDecipheriv('des-cbc', Buffer.from(password), Buffer.from('9C25A7863F0B58F9', 'hex'));
+
+// Cambios para solucionar el error
+const decipher = createDecipheriv('des-ede3-cbc', Buffer.from(password), Buffer.from('9C25A7863F0B58F9', 'hex'));
+decipher.setAutoPadding(true);
+
 const decryptedStream = createWriteStream(decryptedKeyPath);
 
 encryptedData.pipe(decipher).pipe(decryptedStream);
@@ -92,5 +95,6 @@ decryptedStream.on('finish', () => {
 
 decryptedStream.on('error', (error) => {
   console.error('Error al descifrar el archivo:', error);
-  res.status(500).json({ error: 'Error al descifrar el archivo' });
+  // Aquí no puedes usar 'res' directamente porque estás fuera del contexto de la ruta. 
+  // Podrías considerar loguear el error o enviar una respuesta a través de un mecanismo diferente.
 });
