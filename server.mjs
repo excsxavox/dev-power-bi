@@ -4,7 +4,6 @@ import fs from 'fs';
 import fetch from 'node-fetch';
 import cors from 'cors';
 import dotenv from 'dotenv';
-
 dotenv.config({ path: 'config.env' });
 
 const app = express();
@@ -14,11 +13,13 @@ const PORT = process.env.PORT || 443;
 app.use(cors({
   origin: '*',
   exposedHeaders: ['Content-Type', 'Authorization'],
-  credentials: false,
+  credentials: true,
 }));
+
 // Ruta para obtener el token
 app.post('/get-token', async (req, res) => {
   try {
+    // Datos para la solicitud del token
     const tokenData = new URLSearchParams({
       'grant_type': 'password',
       'resource': 'https://analysis.windows.net/powerbi/api',
@@ -58,19 +59,36 @@ app.post('/get-token', async (req, res) => {
   }
 });
 
-// Configuración de opciones HTTPS con archivos
-const options = {
-  key: fs.readFileSync('power.key'),
-  cert: fs.readFileSync('ServerCertificate.crt'),
-};
 
-// Crear servidor HTTPS
-const server = https.createServer(options, app);
+const decrytedKey = 'biDecry.key'
+const password = 'Power123'
 
-server.on('error', (error) => {
-  console.error('Error en el servidor HTTPS:', error);
+const encryptedKeyPath = 'bi.Key';
+const encryptedData = createReadStream(encryptedKeyPath);
+const decipher = createDecipheriv('des-cbc', Buffer.from(password), Buffer.from('9C25A7863F0B58F9', 'hex'));
+const decryptedStream = createWriteStream(decryptedKeyPath);
+
+encryptedData.pipe(decipher).pipe(decryptedStream);
+
+decryptedStream.on('finish', () => {
+  // Crear servidor HTTPS después de descifrar la clave
+  const decryptedOptions = {
+    key: fs.readFileSync(decryptedKeyPath),
+    cert: fs.readFileSync('server.cert'),
+  };
+
+  const server = https.createServer(decryptedOptions, app);
+
+  server.on('error', (error) => {
+    console.error('Error en el servidor HTTPS:', error);
+  });
+
+  server.listen(PORT, '0.0.0.0', () => {
+    console.log(`Servidor escuchando en el puerto ${PORT} con HTTPS`);
+  });
 });
 
-server.listen(PORT, '0.0.0.0', () => {
-  console.log(`Servidor escuchando en el puerto ${PORT} con HTTPS`);
+decryptedStream.on('error', (error) => {
+  console.error('Error al descifrar el archivo:', error);
+  res.status(500).json({ error: 'Error al descifrar el archivo' });
 });
