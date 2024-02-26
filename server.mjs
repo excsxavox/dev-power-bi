@@ -65,7 +65,7 @@ app.post('/get-token', async (req, res) => {
 const decryptedKeyPath = 'biDecry.key'
 const password = 'Power123'
 
-const encryptedKeyPath = '/dev-power-bi/bi.Key';
+const encryptedKeyPath = 'bi.Key';
 const encryptedData = createReadStream(encryptedKeyPath);
 const decipher = createDecipheriv('des-cbc', Buffer.from(password), Buffer.from('9C25A7863F0B58F9', 'hex'));
 const decryptedStream = createWriteStream(decryptedKeyPath);
