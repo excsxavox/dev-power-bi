@@ -15,8 +15,7 @@ RUN npm install
 # Copia los archivos de la aplicación al directorio de trabajo
 COPY . .
 
-#certificados
-key_password=edison123
+
 
 # Expone el puerto en el que la aplicación se ejecutará
 EXPOSE 443
