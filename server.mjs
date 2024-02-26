@@ -60,7 +60,7 @@ app.post('/get-token', async (req, res) => {
 });
 
 
-const decrytedKey = 'biDecry.key'
+const decryptedKeyPath = 'biDecry.key'
 const password = 'Power123'
 
 const encryptedKeyPath = 'bi.Key';
