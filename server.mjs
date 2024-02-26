@@ -61,40 +61,22 @@ app.post('/get-token', async (req, res) => {
   }
 });
 
-const decryptedKeyPath = 'biDecry.key';
-const password = 'Power123';
 
-const encryptedKeyPath = 'power.Key';
-const encryptedData = createReadStream(encryptedKeyPath);
+const decryptedKeyPath = 'bi_decrypted.key';
 
-// Cambios para solucionar el error
-const decipher = createDecipheriv('des-ede3-cbc', Buffer.from(password), Buffer.from('9C25A7863F0B58F9', 'hex'));
-decipher.setAutoPadding(true);
+// Configuración de las opciones HTTPS con la clave privada sin contraseña
+const decryptedOptions = {
+  key: fs.readFileSync(decryptedKeyPath),
+  cert: fs.readFileSync('server.cert'),
+};
 
-const decryptedStream = createWriteStream(decryptedKeyPath);
+// Crear servidor HTTPS
+const server = https.createServer(decryptedOptions, app);
 
-encryptedData.pipe(decipher).pipe(decryptedStream);
-
-decryptedStream.on('finish', () => {
-  // Crear servidor HTTPS después de descifrar la clave
-  const decryptedOptions = {
-    key: fs.readFileSync(decryptedKeyPath),
-    cert: fs.readFileSync('server.cert'),
-  };
-
-  const server = https.createServer(decryptedOptions, app);
-
-  server.on('error', (error) => {
-    console.error('Error en el servidor HTTPS:', error);
-  });
-
-  server.listen(PORT, '0.0.0.0', () => {
-    console.log(`Servidor escuchando en el puerto ${PORT} con HTTPS`);
-  });
+server.on('error', (error) => {
+  console.error('Error en el servidor HTTPS:', error);
 });
 
-decryptedStream.on('error', (error) => {
-  console.error('Error al descifrar el archivo:', error);
-  // Aquí no puedes usar 'res' directamente porque estás fuera del contexto de la ruta. 
-  // Podrías considerar loguear el error o enviar una respuesta a través de un mecanismo diferente.
+server.listen(PORT, '0.0.0.0', () => {
+  console.log(`Servidor escuchando en el puerto ${PORT} con HTTPS`);
 });
