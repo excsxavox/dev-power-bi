@@ -62,7 +62,7 @@ app.post('/get-token', async (req, res) => {
 });
 
 
-const decryptedKeyPath = 'bi_decrypted.key';
+const decryptedKeyPath = 'bi_decryted.key';
 
 // Configuración de las opciones HTTPS con la clave privada sin contraseña
 const decryptedOptions = {
