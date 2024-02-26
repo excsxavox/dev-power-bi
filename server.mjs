@@ -64,7 +64,7 @@ app.post('/get-token', async (req, res) => {
 const decryptedKeyPath = 'biDecry.key';
 const password = 'Power123';
 
-const encryptedKeyPath = 'bi.Key';
+const encryptedKeyPath = 'power.Key';
 const encryptedData = createReadStream(encryptedKeyPath);
 
 // Cambios para solucionar el error
